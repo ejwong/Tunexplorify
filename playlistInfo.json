@@ -1,0 +1,11 @@
+{
+	"playlistID":"{{playlistID}}",
+	"playlistName":"{{playlistName}}",
+	"playlistID2":"{{playlistID2}}",
+	"playlist_url":"{{playlist_url}}",
+	"playlist_uri":"{{playlist_uri}}",
+	"artists":{{artists |safe}},
+	"numberTracks":"{{numberTracks}}",
+	"tracks":{{tracks | safe}}
+}
+	

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Tunexplorify</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" href="./assets/bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+
+<!-- Custom styles for this template -->
+    <link rel="stylesheet" href="./assets/cover.css"> 
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--     [if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5xshiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif] -->
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <!-- <img class="masthead-brand" src="./assets/tunexplorify logo-05.svg" alt="logo" height=35/> -->
+              <!-- <h3 class="masthead-brand">Playlist Modifier</h3> -->
+              <nav class="navbar-fixed-top" style="background-color: black; padding-left:50px; padding-right:50px;">
+                <img class="masthead-brand" src="./assets/tunexplorify logo-05.svg" alt="logo" height=35/>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="https://tunexplorify.appspot.com/">Home</a></li>
+                  <li><a href="https://tunexplorify.appspot.com/about">About</a></li>
+                  <li ><a href="https://tunexplorify.appspot.com/playlist">Playlist</a></li>
+                  {% if current_user %}
+<!--                     <p>You are logged in as {{current_user.displayname|escape }}.</p>
+ -->                    <li><form action="/auth/logout">
+                          <button type="submit" class="btn btn-sm btn-success" value="Logout">LOGOUT OUT OF SPOTIFY</button>
+                    </form></li>
+                  {% else %}
+                    <li><form action="/auth/login">
+                          <button type="submit" class="btn btn-sm btn-success" value="Login">LOGIN WITH SPOTIFY</button>
+                    </form></li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover" style="padding-top: 100px;">
+            <!-- <h1 class="cover-heading">Playlist Modifier</h1> -->
+                          <img class="cover-heading" class="masthead-brand" src="./assets/tunexplorify logo-05.svg" alt="logo" height=50/>
+
+            <p class="lead">Tunexplorify allows users to explore new music by listening to 30 second previews from existing Spotify playlists and rating each song with "like", "maybe", or "dislike". A new playlist is generated in their Spotify library with the songs they rated with "like" and "maybe". 
+            <p class="lead">
+              <a href="https://tunexplorify.appspot.com/playlist" class="btn btn-lg btn-primary">Get Started!</a>
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p style="text-align: center;">Created by Emily Wong.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
+    <!-- <script src=".assets/bootstrap/dist/js/bootstrap.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="./assets/boootsrap/docs/assets/js/ie10-viewport-bug-workaround.js"></script> -->
+    <script type="text/javascript">
+      
+
+    </script>
+  </body>
+</html>

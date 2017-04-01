@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <title>Playlist Modifier</title>
+	  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"" type="text/css" rel="stylesheet" />
+
+	      <link href="./assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./assets/bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"" type="text/css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="assets/cover.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
+<!-- 	  <style type="text/css">
+	  	{% include "playlist.css" %}
+	  </style> -->
+  </head>
+  <body>
+  	 <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <!-- <img class="masthead-brand" src="./assets/tunexplorify logo-05.svg" alt="logo" height=35/> -->
+              <nav class="navbar-fixed-top" style="background-color: black; padding-left:50px; padding-right:50px;">
+              	<img class="masthead-brand" src="./assets/tunexplorify logo-05.svg" alt="logo" height=35/>
+                <ul class="nav masthead-nav">
+                  <li><a href="https://tunexplorify.appspot.com/">Home</a></li>
+                  <li><a href="https://tunexplorify.appspot.com/about">About</a></li>
+                  <li class="active"><a href="https://tunexplorify.appspot.com/playlist">Playlist</a></li>
+                  {% if current_user %}
+                  	<li><form action="/auth/logout"><button type="submit" class="btn btn-sm btn-success" value="Logout">LOGOUT OUT OF SPOTIFY</button></form></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          </div>
+                    <!-- <p id="login-as">You are logged in as {{current_user.displayname|escape }}.</p> -->
+
+
+		  	<form id="playlistInfo" action = "" method = "get">
+		    	<div class="form-group row">
+		    		<label for="playlistURL" class="col-sm-2 col-form-label ">Enter a playlist URL:  </label>
+		    		<div class="col-sm-9">
+		    			<input class="form-control" type="text" id="playlist URL" name="playlistURL"/>
+		    		</div>
+		    	</div>
+		    	<div class="form-group row">
+		    		<label for="playlistName" class="col-sm-2 col-form-label">Enter a new playlist name:  </label>
+		    		<div class="col-sm-9">
+		    			<input class="form-control" type="text" id="playlistName" name="playlistName"/>
+		    		</div>
+		    	</div>
+		    	<input class="btn btn-sm btn-success" type="submit" value="Get Playlist" name="playlistInfo" />
+		    </form>
+
+		    <div id="title" style="padding-top: 75px">
+		    </div>
+
+			<form id="rating" action="" method="get">
+			    <div id="results" class="container">
+					    <div class="row row1">
+					        <div class="col-md-2">Name</div>
+					        <div class="col-md-2">Artist</div>
+					        <div class="col-md-4">Preview</div>
+					        <div class="col-md-4">Rating</div>
+			      		</div>
+		      	</div>
+		    </form>
+
+
+		    {% else %}
+                    <!-- <p id="not-login">You are not yet logged into this site</p> -->
+                    <form action="/auth/login">
+                    	<p id="not-login">Log in to Spotify to continue</p>
+                        <button type="submit" class="btn btn-sm btn-success" value="Login">LOGIN WITH SPOTIFY</button>
+                    </form>
+                   {% endif %}
+
+<!--           <div class="mastfoot">
+            <div class="inner">
+              <p>Created by Emily Wong.</p>
+            </div>
+          </div> -->
+
+        </div>
+
+
+      </div>
+
+    </div>
+	<script>
+		$('#rating').hide()
+		// my little html string builder
+		buildHTML = function(tag, html, attrs) {
+		  // you can skip html param
+		  if (typeof(html) != 'string') {
+		    attrs = html;
+		    html = null;
+		  }
+		  var h = '<' + tag;
+		  for (attr in attrs) {
+		    if(attrs[attr] === false) continue;
+		    h += ' ' + attr + '="' + attrs[attr] + '"';
+		  }
+		  return h += html ? ">" + html + "</" + tag + ">" : "/>";
+		}
+
+		// pre: HTML tag type, attributes of the tag, HTML text
+		// post: creates HTML tag with attributes and returns the element 
+		buildTag = function(tag, attrs, html) {
+		  tag = document.createElement(tag);
+		  for(attr in attrs) {
+		  	tag.setAttribute(attr, attrs[attr]);
+		  }
+		  tag.innerHTML = html;
+		  return tag
+		}
+
+		// pre: playlist URL and new playlist name
+		/* post: creates form for each button type: up, sideways, down 
+		*/
+		$("form#playlistInfo").submit(function( event ) {
+			event.preventDefault();
+			url = "/api/playlistInfo.json?"+$(this).serialize();
+			console.log(url);
+			$.getJSON(url).done(function(data){
+				$('#playlistInfo').hide()
+				$('#rating').show()
+				$('#title').append("<h1>" + data.playlistName + "</h1>")
+				$.each(data.tracks, function(i, track){
+					var rowDiv = buildTag("div", {"class":"row"},"")
+
+					var video = document.createElement("video");
+					var source = document.createElement("source");	
+					video.setAttribute('controls', "");
+					video.setAttribute('name', 'media');
+					video.setAttribute("height", "30px");
+					video.setAttribute("width", "300px");
+					source.src = track.track.preview_url;
+					source.type = "audio/mpeg";
+					video.append(source)
+
+					//testing radio button stuff
+					var fieldset = buildTag("fieldset", {"class": "form-group"}, "")
+					upLabel = buildTag("label", {"class": "form-check-inline"}, "like   ")
+					upInput = buildTag("input", {"class": "form-check-input", "type":"radio", "name":"track" + i, "value":"like-" + track.track.uri}, "")
+					upLabel.append(upInput)
+					fieldset.append(upLabel)
+
+					maybeLabel = buildTag("label", {"class": "form-check-inline"}, "maybe   ")
+					maybeInput = buildTag("input", {"class": "form-check-input", "type":"radio", "name":"track" + i, "value":"maybe-" + track.track.uri}, "")
+					maybeLabel.append(maybeInput)
+
+					fieldset.append(maybeLabel)
+
+					downLabel = buildTag("label", {"class": "form-check-inline"}, "dislike   ")
+					downInput = buildTag("input", {"class": "form-check-input", "type":"radio", "name":"track" + i, "value":"dislike-" + track.track.uri}, "")
+					downLabel.append(downInput)
+					fieldset.append(downLabel)
+
+
+					var nameDiv = buildTag("div", {"class":"col-md-2"},track.track.name)
+					var artistDiv = buildTag("div", {"class":"col-md-2"}, data.artists[i])
+					var previewDiv = buildTag("div", {"class":"col-md-4"},"")
+					previewDiv.append(video)
+					var ratingDiv = buildTag("div", {"class":"col-md-4"},"")
+					ratingDiv.append(fieldset)
+
+
+					rowDiv.append(nameDiv)
+					rowDiv.append(artistDiv)
+					rowDiv.append(previewDiv)
+					rowDiv.append(ratingDiv)
+					$("#results").append(rowDiv)
+				});
+
+				$("form#rating").submit(function( event ) {
+					event.preventDefault();
+					url = "/api/ratings.json?"+$(this).serialize();
+					$.getJSON(url).done(function(data){
+						iframe = buildTag("iframe", {"src": "https://embed.spotify.com/?uri=" + encodeURIComponent(data.playlist_uri), "width": "300", "height": "380", "frameborder": "0", "allowtransparency": "true"})
+						$("#rating").append(iframe)
+						$("#results").hide()
+						$("#savePlaylistBtn").hide()
+					});
+				});
+				$("#rating").append(buildTag("input", {"type": "hidden", "value": data.playlist_uri, "name":"playlist_uri"},""))
+				$("#rating").append(buildTag("input", {"type": "hidden", "value": data.playlist_url, "name":"playlist_url"},""))
+				$("#rating").append(buildTag("input", {"type": "hidden", "value": data.playlistID2, "name":"playlistID"},""))
+				$("#rating").append(buildTag("input", {"type":"hidden", "value": data.numberTracks, "name": "numberTracks"},""))
+				$("#rating").append(buildTag("button", {"class":"btn btn-sm btn-success","type":"submit","name":"savePlaylist", "id": "savePlaylistBtn"}, "Save Playlist"));
+			});
+
+		});
+	</script>	
+  </body>
+
+  <!-- <script src="/js/playlist.js"></script> -->
+</html>

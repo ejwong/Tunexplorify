@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>About</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" href="./assets/bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+
+<!-- Custom styles for this template -->
+    <link rel="stylesheet" href="./assets/cover.css"> 
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--     [if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5xshiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif] -->
+  </head>
+
+  <body>
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <!-- <img class="masthead-brand" src="./assets/tunexplorify logo-05.svg" alt="logo" height=35/> -->
+              <nav class="navbar-fixed-top" style="background-color: black; padding-left:50px; padding-right:50px;">
+                <img class="masthead-brand" src="./assets/tunexplorify logo-05.svg" alt="logo" height=35/>
+                <ul class="nav masthead-nav">
+                  <li><a href="https://tunexplorify.appspot.com/">Home</a></li>
+                  <li class="active"><a href="https://tunexplorify.appspot.com/about">About</a></li>
+                  <li ><a href="https://tunexplorify.appspot.com/playlist">Playlist</a></li>
+                  {% if current_user %}
+                    <li><form action="/auth/logout">
+                          <button type="submit" class="btn btn-sm btn-success" value="Logout">LOGOUT OUT OF SPOTIFY</button>
+                    </form></li>
+                  {% else %}
+                    <li><form action="/auth/login">
+                          <button type="submit" class="btn btn-sm btn-success" value="Login">LOGIN WITH SPOTIFY</button>
+                    </form></li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+
+
+<!--           <div class="mastfoot">
+            <div class="inner">
+              <p>Created by Emily Wong.</p>
+            </div>
+          </div> -->
+
+        </div>
+            <div class="container">
+                <h1 class="cover-heading h1-special">Playlist Modifier</h1>
+                <br>
+                <h4>Problem:</h4>
+                <p>Currently, Spotify has a lot of playlists that allow users to discover new music through browsing playlists and updating Discover Weekly, a specifically generated playlist aligned with a user's music tastes. Also, people share music through playlists with their friends. However, users may not like every song in the playilst, but still want to conveniently keep track of the songs that they do enjoy. </p>
+                <br>
+                <h4>Solution:</h4>
+                <p>Playlist Modifier allows users to easily preview songs in a playlist that they encounter and rate them with a "like", "maybe", or "dislike". A new playlist will be created within their Spotify library with the tracks that they like at the top and the tracks that they might like at the bottom for them to come back and listen to in the future. This reduces the hassle of having to listen to a playlist with songs that they dislike.  </p>
+                <br>
+                <h4>Credits:</h4>
+                <ul class="container">
+                    <li>Created By: Emily Wong</li>
+                    <li>Special thanks: Sean Munson and HCDE 310 staff </li>
+                </ul>              
+          </div>
+
+      </div>
+
+    </div>
+
+  </body>
+  </html>
